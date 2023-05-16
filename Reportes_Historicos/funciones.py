@@ -43,11 +43,11 @@ def is_capslock_on():
 
 
 def crear_carpeta_si_no_existe(ruta):
-    os.makedirs(ruta, exist_ok=True)
     if not os.path.exists(ruta):
-        print("Error al crear la carpeta:", ruta)
-        return False
-    return True
+        os.makedirs(ruta)
+        print("The new directory is created!")
+    else:
+        print("Ya esta")
 
 def descomprimir_archivo(zip_ubicacion, folder_destino):
     with zipfile.ZipFile(zip_ubicacion, "r") as zip_ref:

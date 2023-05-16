@@ -36,33 +36,18 @@ if dia_semana < 5:
         if ping_output.returncode != 0:
             conectar_VPN(img__forti,img__conectar)
         
-        # crea folder si no existe
+        # crea dd-mm-yyyy
         crear_carpeta_si_no_existe(folder__destino)
-
+        # Crea carpeta del dia
+        crear_carpeta_si_no_existe(folder__mover+fecha_carpeta)
+        
         listar = os.listdir(folder__destino)
         numero_archivos = len(listar)
         print(numero_archivos)
 
         if numero_archivos < 1:
             print('no hay archivos en la carpeta')
-
             descomprimir_archivo(zip_ubicacion,folder__destino)
-            #Descomprime
-            # with zipfile.ZipFile(zip_ubicacion,"r") as zip_ref:
-            #     zip_ref.extractall(folder__destino)
-            # zip_ref.close() 
-            # print('Archivos Descomprimidos')
-
-
-            # for file_name in os.listdir(folder__destino):
-            #         # #Construct old file name
-            #         source_name = folder__destino + file_name
-            #         f_name=file_name.rsplit(' ', 1)[0]
-            #         new_name = folder__destino + f_name + " " + fecha_formato + ".xlsx"
-
-            #         # Renaming the file
-            #         os.rename(source_name, new_name)                  
-            # print('Archivos Renombrados')
             renombrar_archivos(folder__destino, fecha_formato)
         pythoncom.CoInitialize()
         for file_name in os.listdir(folder__destino):
@@ -156,8 +141,8 @@ if dia_semana < 5:
                 pyautogui.click(prev__btn) 
                 
                 nombre=file_name.rsplit('.', 1)[0]
-                final_str=folder__destino[:-1]
-                td = final_str+nombre+' (TD).xlsx'
+                final_str=folder__mover[:-1]+fecha_carpeta
+                td = final_str+'\\'+nombre+' (TD).xlsx'
                 time.sleep(5)
                 print(td)
                 
@@ -169,12 +154,6 @@ if dia_semana < 5:
                 pyautogui.click(visual)   
 
                 os.remove(archivo_destino) 
-                # shutil.move(archivo_destino, folder__mover)
-                isExist = os.path.exists(folder__mover+fecha_carpeta)
-                if not isExist:
-                    os.makedirs(folder__mover+fecha_carpeta)
-                    print("The new directory is created!")
-                shutil.move(td,folder__mover+fecha_carpeta)
                 print('finished')
     
                 if is_paused:
