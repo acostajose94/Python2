@@ -37,3 +37,11 @@ fecha_carpeta= fecha_ayer.strftime('%Y-%m-%d')
 fecha_actual      = datetime.datetime.now()
 dia_semana = fecha_actual.weekday()
 hora_actual = fecha_actual.hour
+
+
+
+# Ruta de la carpeta local que deseas subir
+carpeta_local = r'C:\Users\avalp\OneDrive\Escritorio\2023-05-16\\'
+
+# ID de la carpeta compartida de Google Drive
+carpeta_drive_id = '19U0E1FrynnQgp77XS2LtJryzDABwCx9I'

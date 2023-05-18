@@ -5,7 +5,7 @@ import winreg
 import shutil
 from funciones_base import *
 
-archivo1='Asignacion Cartera activa 2023-1 Mayo.xlsx'
+archivo1='Asignacion Cartera Activa 2023-1 Mayo 17-31 Mayo.xlsx'
 
 #---------------------------
 

@@ -3,8 +3,10 @@ import pyautogui
 import ctypes
 import os
 import zipfile
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 
-format__btn=r'C:\Users\avalp\Desktop\python\format__btn.png'
+
 
 def buscarImagen_high(imagen):
     time.sleep(5)
@@ -76,3 +78,22 @@ def renombrar_archivos(folder_destino, fecha_formato):
 
     print('Archivos Renombrados')
     
+
+def subir_carpeta_a_google_drive(carpeta_local, carpeta_drive_id,titulo):
+    # Crear una instancia de GoogleAuth y autenticarse con las credenciales
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()
+
+    # Crear una instancia de GoogleDrive usando las credenciales autenticadas
+    drive = GoogleDrive(gauth)
+
+    # Crear la carpeta en Google Drive
+    carpeta_drive = drive.CreateFile({titulo: os.path.basename(carpeta_local), 'mimeType': 'application/vnd.google-apps.folder', 'parents': [{'id': carpeta_drive_id}]})
+    carpeta_drive.Upload()
+
+    # Subir los archivos de la carpeta local a la carpeta de Google Drive
+    for archivo in os.listdir(carpeta_local):
+        ruta_archivo_local = os.path.join(carpeta_local, archivo)
+        archivo_drive = drive.CreateFile({titulo: archivo, 'parents': [{'id': carpeta_drive['id']}]})
+        archivo_drive.SetContentFile(ruta_archivo_local)
+        archivo_drive.Upload()
