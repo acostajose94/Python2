@@ -5,14 +5,14 @@ import winreg
 import shutil
 from completado_funcion import *
 
-archivo1='Asignacion Cartera activa 2023-1 Mayo.xlsx'
-
+archivo1='Asignacion Cartera Activa 2023-1 Mayo 17-31 Mayo.xlsx'
+archivo2='Asignacion Cartera activa 2023-1 Mayo.xlsx'
 #---------------------------
 arch1=tabla(archivo1)
-
+arch2=tabla(archivo2)
 #tabla3=tabla('Base Asignacion Formacion continua Externa 2022  Enero.xlsx')
 
-tabla_final = pd.concat([arch1])
+tabla_final = pd.concat([arch1,arch2])
 
 # Obtener la fecha actual en formato dd_mm
 fecha_actual = datetime.datetime.now().strftime('%d_%m')

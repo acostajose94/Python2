@@ -21,6 +21,7 @@ formato_texto(sheet,28)
 formato_fecha(sheet,29)
 formato_texto(sheet,35)
 formato_texto(sheet,37)
+
 # Agregar columna en blanco en la tercera posición entre EMPLID y CODIGO
 sheet.insert_cols(3)
 

@@ -2,7 +2,7 @@ import os
 import zipfile
 import win32com.client
 from openpyxl import Workbook
-import time
+import time     
 import keyboard
 import pyautogui
 import win32api
@@ -219,7 +219,7 @@ if dia_semana < 5:
 else:
     # Si es sábado o domingo entre las 5 y las 6 de la mañana
     if dia_semana == 5 or dia_semana == 6:
-        if hora_actual >= 5 and hora_actual < 6:
+        if  hora_actual < 6:
             # Apagar la PC
             os.system("shutdown /s /t 1")
             print("Apagando la PC...")
