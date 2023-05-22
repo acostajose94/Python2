@@ -31,7 +31,6 @@ if not os.path.exists(ruta_carpeta):
     os.makedirs(ruta_carpeta)
 
 ruta_archivo = os.path.join(ruta_carpeta, fecha_actual+' Pagos Inactiva.xlsx')
-
 tabla_final.to_excel(ruta_archivo, index=False)
 
 shutil.move(archivo1,ruta_carpeta)
