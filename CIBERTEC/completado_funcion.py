@@ -1,5 +1,5 @@
 import pandas as pd
-
+import re
 
 # Completo
 def convertir_a_float(df, columna):
@@ -83,18 +83,38 @@ def tabla(archivo):
         df_final['CICLO'] = pd.np.nan
         df_final['PERIODO'] = pd.np.nan
         
-        #Modifica fecha, para completar
-        def convertir_fecha(fecha):
-            try:
-                return fecha.strftime('%d/%m/%Y')
-            except:
-                return fecha
-        df_final['FECHA_DOC'] = df_final['FECHA_DOC'].apply(convertir_fecha)
+        # #Modifica fecha, para completar
+        # def convertir_fecha(fecha):
+        #     try:
+        #         return fecha.strftime('%d/%m/%Y')
+        #     except:
+        #         return fecha
+        # df_final['FECHA_DOC'] = df_final['FECHA_DOC'].apply(convertir_fecha)
         # Convert the 'FECHA_DOC' column to a string data type
         df_final['FECHA_DOC'] = df_final['FECHA_DOC'].astype(str)
         mask = df_final['FECHA_DOC'].str.endswith('/202')
         filas = df_final[mask].index
         df_final.loc[filas, 'FECHA_DOC'] = df_final.loc[filas, 'FECHA_DOC'].apply(lambda x: x + '2') 
+        
+        def convertir_formato_fecha(fecha):
+            patrones = [
+                r'\d{2}/\d{2}/\d{4}',  # formato 'dd/mm/yyyy'
+                r'\d{4}-\d{2}-\d{2}',  # formato 'yyyy-mm-dd'
+            ]
+
+            for patron in patrones:
+                coincidencia = re.match(patron, fecha)
+                if coincidencia:
+                    fecha_match = coincidencia.group()
+                    if '/' in fecha_match:
+                        nueva_fecha = pd.to_datetime(fecha_match, format='%d/%m/%Y')
+                    else:
+                        nueva_fecha = pd.to_datetime(fecha_match, format='%Y-%m-%d')
+                    return nueva_fecha.strftime('%d/%m/%Y')
+
+            return fecha
+            
+        df_final['FECHA_DOC'] = df_final['FECHA_DOC'].apply(convertir_formato_fecha)
         df_final['FECHA_DOC'] = pd.to_datetime(df_final['FECHA_DOC'], format='%d/%m/%Y')
 
         #Regresa gestor a capitalize
