@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Cargar archivo Excel y seleccionar hoja "Base1"
-df = pd.read_excel('CARTERA TOTAL TERCERIZADA AVAL 05.04.2023.xlsx', sheet_name='Hoja2')
+df = pd.read_excel('CARTERA TOTAL AVAL 06.07.2023.xlsx', sheet_name='Hoja1')
 
   
 # agregar columnas vacías en posiciones específicas
@@ -13,6 +13,7 @@ df['TIPO_DOCT'] = df['TIPO Y NUMERO DE DOCUMENTO'].str.slice(stop=2)
 df['NUM_DOCT'] = df['TIPO Y NUMERO DE DOCUMENTO'].str.slice(start=2)
 df['ANIO_VENCIMIENTO'] = df['FECHA_VENCIMIENTO'].dt.year.astype(str)
 df['CXC'] = df['TIPO Y NUMERO DE DOCUMENTO']
+df['MONEDA']='LO'
 df['TELEFONO'] = ''
 df['TELEFONO2'] = ''
 df['CORREO'] = ''
@@ -20,8 +21,8 @@ df['CORREO2'] = ''
 
 #Reordenar contenido
 new_cols = [
-    'UNIDAD DE NEGOCIO', 'CODIGO ALUMNO', 'TIPO DE DOCUMENTO DE IDENTIDAD', 'NUMERO DE DOCUMENTO DE IDENTIDAD',
-    'columna4','RAZON SOCIAL', 'APELLIDOS Y NOMBRES DEL ALUMNO','TIPO_DOCT','NUM_DOCT', 'TIPO Y NUMERO DE DOCUMENTO', 'FECHA_EMISION', 'FECHA_VENCIMIENTO',
+    'UNIDAD_NEGOCIO', 'COD_ALUMNO', 'TIPO_DOC_IDENTIDAD', 'NRO_DOC_IDENTIDAD',
+    'columna4','RAZON_SOCIAL', 'APELLIDOS Y NOMBRES DEL ALUMNO','TIPO_DOCT','NUM_DOCT', 'TIPO Y NUMERO DE DOCUMENTO', 'FECHA_EMISION', 'FECHA_VENCIMIENTO',
     'DIAS DE ANTIQUAMIENTO', 'MONEDA', 'MONTO_ORIGINAL','CXC','ANIO_VENCIMIENTO', 'DEUDA', 'EMPRESA_EXTERNA','columna19', 'columna20','columna21', 'FACULTAD/CARRERA', 'CAMPUS',
     'NOMBRE_CARTERA','TELEFONO','TEEFONO2','CORREO','CORREO2'
 ]

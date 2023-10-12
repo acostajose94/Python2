@@ -1,3 +1,9 @@
 client_secret_*
 * oauth_token_
 *.xlsx
+*.txt
+*.json
+*.csv
+*.log
+*.zip
+*.rar

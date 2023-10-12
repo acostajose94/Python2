@@ -6,11 +6,11 @@ locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 # Direcciones
 carpeta_b=r"\\192.168.100.45\\Clientes\\62. Unique\\2023\\"
-ruta_origen = r"\\172.23.1.6\\area - desarrollo\\COBRANZA -BASES\\62_UNIQUE\dd-mm\\" 
+ruta_origen = r"V:\62. Unique\2023\dd-mm\\" 
 
 hoy=datetime.datetime.now()
 ayer=hoy- datetime.timedelta(days=1)
-mes_anterior=hoy.replace(month=hoy.month-1)
+# mes_anterior=hoy.replace(month=hoy.month-1)
 
 # Obtener el mes actual
 num_dia = hoy.strftime('%d')

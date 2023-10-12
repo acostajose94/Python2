@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Cargar archivo Excel y seleccionar hoja "Base1"
-df = pd.read_excel('CARTERA TOTAL TERCERIZADA AVAL 05.04.2023.xlsx', sheet_name='Hoja2')
+df = pd.read_excel('CARTERA TOTAL TERCERIZADA AVAL 05.04.2023.xlsx', sheet_name='Hoja1')
 df2 = pd.read_excel('DATOS DE CONTACTO AVAL 05.04.23.xlsx', sheet_name='Hoja1')
   
 # agregar columnas vacías en posiciones específicas

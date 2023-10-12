@@ -8,9 +8,9 @@ jira_token = 'ATATT3xFfGF0VL-dZkNtEvIXaiHp3I3CgMF754VxGk_wvLtEwIPEd0xIDgAVOEFFD5
 
 fecha_hoy     = datetime.date.today().strftime('%Y-%m-%d')
 fecha_actual = datetime.datetime.now()
-ayer=fecha_actual- datetime.timedelta(days=1).strftime('/%d')
+ayer=fecha_actual- datetime.timedelta(days=1)
 if fecha_actual.weekday() == 0:
-    fecha_hoy=fecha_hoy+ayer
+    fecha_hoy = fecha_hoy + '/' + ayer.strftime('%d')
 project_key = 'SOP'
 ticket_summary = 'BASE UNIQUE Y PAGOS '+fecha_hoy
 assignee_name='Jose Acosta'

@@ -221,7 +221,7 @@ else:
     if dia_semana == 5 or dia_semana == 6:
         if  hora_actual < 6:
             # Apagar la PC
-            os.system("shutdown /s /t 1")
+            os.system("shutdown /s /t 10")
             print("Apagando la PC...")
         else:
             print("Hoy no es un día hábil ni la hora para apagar la PC")
