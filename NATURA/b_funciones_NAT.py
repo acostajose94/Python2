@@ -2,6 +2,8 @@ from openpyxl.styles import numbers
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
+from openpyxl.cell.cell import Cell
+from openpyxl.worksheet.worksheet import Worksheet
 import os
 import shutil
 import glob
@@ -224,3 +226,23 @@ def eliminar_columnas_por_nombre(sheet, columnas_a_eliminar):
         for col in sheet.columns:
             if col[0].value == col_name:
                 sheet.delete_cols(col[0].column)
+
+def elimina_tabulaciones(sheet: Worksheet, *columnas):
+    for col_idx in columnas:
+        for row in sheet.iter_rows(min_row=2, min_col=col_idx, max_col=col_idx):
+            for cell in row:
+                if isinstance(cell,Cell) and cell.value is not None and '\t\n' in cell.value:
+                    cell.value = cell.value.replace('\t\n', ' ')
+
+
+
+def eliminar_espacios_y_guiones(sheet, *columnas):
+    if len(columnas) == 1 and isinstance(columnas[0], list):
+        columnas = columnas[0]
+
+    for columna in columnas:
+        for row in sheet.iter_rows(min_row=2, min_col=columna, max_col=columna):
+            for cell in row:
+                if isinstance(cell.value, str):
+                    # Reemplazar guión medio y espacios en blanco con cadena vacía
+                    cell.value = cell.value.replace('-', '').replace(' ', '')

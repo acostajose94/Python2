@@ -17,7 +17,7 @@ for archivo_excel in archivos_excel:
     verificar_cabecera_completa(sheet, cabecera_esperada)
     sheet=insertar_columnas_vacias(sheet, nombre_columna, cantidad_columnas)
      
-    # elimina_tabulaciones(sheet)
+    elimina_tabulaciones(sheet)
     formato_texto(sheet, 1,2, 4, 7, 8, 9,10,16)
     formato_numero(sheet, 36,37,38,39,40,41,42,43,44)
     formato_fecha(sheet,25,27,31,32)

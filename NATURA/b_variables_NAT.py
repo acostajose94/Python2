@@ -4,8 +4,9 @@ hoy=datetime.now()
 fecha_actual =hoy.strftime('%d.%m.%y')
 hoy_carpeta=hoy.strftime('%d_%m')
  
-eliminar_cabecera=['Control de Envío la Pérdida',
+eliminar_cabecera_aveces=['Control de Envío la Pérdida',
 'Fecha de Envío la Pérdida']
+columnas_a_eliminar_casi_siempre = ['COLOR']
 
 cabecera = [
     'Orden del Pedidos','Código Persona','Cod Grupo','Nombre de la Persona','Título',
