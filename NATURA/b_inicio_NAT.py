@@ -4,7 +4,7 @@ from openpyxl import Workbook
 from b_funciones_NAT import *
 from b_variables_NAT import *
 
-archivo_reciente=extraer_archivo_mas_reciente()
+# archivo_reciente=extraer_archivo_mas_reciente()
 archivos_excel=listar_excels()
 
 ruta_carpeta=define_carpeta('B NAT',fecha_actual)
@@ -12,7 +12,7 @@ ruta_carpeta=define_carpeta('B NAT',fecha_actual)
 for archivo_excel in archivos_excel:
     # Abre el archivo de Excel
     workbook = openpyxl.load_workbook(archivo_excel)
-    sheet = workbook['ASIGNACION']
+    sheet = workbook.active
     eliminar_columnas_por_nombre(sheet, eliminar_cabecera_aveces)
 
     eliminar_columnas_por_nombre(sheet, columnas_a_eliminar_casi_siempre)

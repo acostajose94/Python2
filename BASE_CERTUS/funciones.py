@@ -189,8 +189,15 @@ def eliminar_columnas_por_nombre(sheet, columnas_a_eliminar):
         for col in sheet.columns:
             if col[0].value == col_name:
                 sheet.delete_cols(col[0].column)
-                
-                
+
+
+def elimina_tabulaciones_columnas(sheet: Worksheet, *columnas):
+    for col_idx in columnas:
+        for row in sheet.iter_rows(min_row=2, min_col=col_idx, max_col=col_idx):
+            for cell in row:
+                if isinstance(cell,Cell) and cell.value is not None and '\t\n' in cell.value:
+                    cell.value = cell.value.replace('\t\n', ' ')              
+             
 def corregir_valor_columna(sheet, posicion_columna, valor_a_reemplazar, nuevo_valor):
     # Obtén la cantidad de filas en la hoja
     total_filas = sheet.max_row
