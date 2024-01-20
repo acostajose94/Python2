@@ -31,6 +31,7 @@ def formato_numero(sheet, *columnas):
             valor = cell.value
             if valor is not None and isinstance(valor, str):
                 valor = valor.replace(',', '.')
+                valor = valor.replace('-', '0')
                 cell.value = float(valor)
             cell.number_format = '0.00'
 
@@ -112,7 +113,37 @@ def guardar_archivo_mover(nombre_carpeta, workbook, fecha_actual, nombre_a_guard
 
     for arch in archivos_mover:
         shutil.move(arch, ruta_carpeta)
-          
+   
+def reordenar_columnas(archivo_excel, nuevo_orden):
+    # Obtener la hoja pasada como argumento
+    libro = load_workbook(filename=archivo_excel)
+    hoja = libro.active
+
+    # Insertar una columna 'NO_HAY_DATA' al principio sin datos
+    hoja.insert_cols(1)
+    hoja.cell(row=1, column=1, value='NO_HAY_DATA')
+
+    # Obtener las posiciones actuales de las cabeceras
+    cabeceras = [hoja.cell(row=1, column=col).value for col in range(1, hoja.max_column + 1)]
+    posiciones_actuales = {cabecera: index + 1 for index, cabecera in enumerate(cabeceras)}
+
+    # Crear una nueva hoja para almacenar los datos reordenados
+    nuevo_libro = Workbook()
+    nueva_hoja = nuevo_libro.active
+
+    # Crear las cabeceras en el nuevo orden
+    for cabecera in nuevo_orden:
+        nueva_hoja.cell(row=1, column=nuevo_orden.index(cabecera) + 1, value=cabecera)
+
+    # Copiar los datos a la nueva hoja en el nuevo orden
+    for row in hoja.iter_rows(min_row=2, max_row=hoja.max_row, values_only=True):
+        nueva_fila = []
+        for cabecera in nuevo_orden:
+            nueva_fila.append(row[posiciones_actuales[cabecera] - 1])
+        nueva_hoja.append(nueva_fila)
+
+    return nuevo_libro   
+       
 # Acepta listas NOMBRES
 def eliminar_columnas(sheet, nombres_columnas):
     columnas_eliminar = []
@@ -148,30 +179,6 @@ def seleccionar_columnas_excel(sheet, columnas_seleccionadas):
         datos_seleccionados.append(datos_fila)
 
     return datos_seleccionados
-
-def fusiona_agrega_BOLETA(nueva_hoja,columnas_deseadas,datos_seleccionados):
-    # Escribir los encabezados de las columnas seleccionadas en el nuevo libro
-    for indice, columna_seleccionada in enumerate(columnas_deseadas):
-        letra_columna = get_column_letter(indice + 1)
-        nueva_hoja[f'{letra_columna}1'] = str(columna_seleccionada)
-
-    # Agregar una nueva columna llamada "BOLETA"
-    letra_nueva_columna = get_column_letter(len(columnas_deseadas) + 1)
-    nueva_hoja[f'{letra_nueva_columna}1'] = 'BOLETA'
-
-    # Escribir los datos seleccionados y la columna "BOLETA" en el nuevo libro
-    for indice_fila, fila_datos in enumerate(datos_seleccionados):
-        for indice_columna, valor_celda in enumerate(fila_datos):
-            letra_columna = get_column_letter(indice_columna + 1)
-            nueva_hoja[f'{letra_columna}{indice_fila + 2}'] = valor_celda
-
-        # Concatenar los valores de "NUM. MASIVA" y "DESCRIPCION" en la columna "BOLETA"
-        num_masiva = fila_datos[7]  # Índice 7 corresponde a "NUM. MASIVA"
-        descripcion = fila_datos[8]  # Índice 8 corresponde a "DESCRIPCION"
-        boleta = f'{num_masiva}-{descripcion}'
-        nueva_hoja[f'{letra_nueva_columna}{indice_fila + 2}'] = boleta
-        
-    return nueva_hoja
  
 def pasar_dato_desde_hasta(sheet, dato_desde, dato_para):
     columna_nivel_academico = None
@@ -232,9 +239,7 @@ def elimina_tabulaciones(sheet: Worksheet, *columnas):
         for row in sheet.iter_rows(min_row=2, min_col=col_idx, max_col=col_idx):
             for cell in row:
                 if isinstance(cell,Cell) and cell.value is not None and '\t\n' in cell.value:
-                    cell.value = cell.value.replace('\t\n', ' ')
-
-
+                    cell.value = str(cell.value).replace(chr(10), '').replace(chr(9), '').replace(chr(13), '')
 
 def eliminar_espacios_y_guiones(sheet, *columnas):
     if len(columnas) == 1 and isinstance(columnas[0], list):

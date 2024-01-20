@@ -1,12 +1,88 @@
 from datetime import datetime
 # Obtener la fecha actual en formato dd_mm
 hoy=datetime.now()
-fecha_actual =hoy.strftime('%d.%m.%y')
+fecha_actual =hoy.strftime('%d.%m')
 hoy_carpeta=hoy.strftime('%d_%m')
  
 eliminar_cabecera_aveces=['Control de Envío la Pérdida',
 'Fecha de Envío la Pérdida']
 columnas_a_eliminar_casi_siempre = ['COLOR']
+
+#Nuevo orden
+nuevo_orden = [
+    'Orden del Pedido',
+    'Código Consultora',
+    'Grupo Lider',
+    'Nombre Consultora',
+    'NO_HAY_DATA',
+    'Nro Pedido',
+    'NO_HAY_DATA',
+    'Fecha Pedido',
+    'Fecha Vcto',
+    'NO_HAY_DATA',
+    'Valor Original',
+    'Saldo',
+    'Saldo Corregido',
+    'Interés/Multa Acumulados',
+    '% Descuento Saldo',
+    'Monto Descuento Saldo',
+    'Total Descuentos',
+    'Monto mínimo a pagar Campaña',
+    'NO_HAY_DATA',
+    'Días de Retraso',
+    'Ciclo',
+    'Fecha Nacimiento',
+    'NO_HAY_DATA',
+    'NO_HAY_DATA',
+    'NO_HAY_DATA',
+    'NO_HAY_DATA',
+    'DNI',
+    'Dirección',
+    'Teléfono 1',
+    'Teléfono 2',
+    'Correo',
+    'Tramo Vencimiento',
+    'Agencia',
+    'Riesgo'
+]
+# Lista con el orden de las columnas deseadas
+orden_previo = [
+    'Orden del Pedido',
+    'Código Consultora',
+    'Grupo Lider',
+    'Nombre Consultora',
+    'NO_HAY_DATA',
+    'Nro Pedido',
+    'NO_HAY_DATA',
+    'Fecha Pedido',
+    'Fecha Vcto',
+    'NO_HAY_DATA',
+    'Valor Original',
+    'Saldo',
+    'Saldo Corregido',
+    'Interés/Multa Acumulados',
+    '% Descuento Saldo',
+    'Monto Descuento Saldo',
+    'Total Descuentos',
+    'Monto mínimo a pagar Campaña',
+    'NO_HAY_DATA',
+    'Días de Retraso',
+    'Ciclo',
+    'Fecha Nacimiento',
+    'NO_HAY_DATA',
+    'NO_HAY_DATA',
+    'NO_HAY_DATA',
+    'NO_HAY_DATA',
+    'DNI',
+    'Dirección',
+    'Teléfono 1',
+    'Teléfono 2',
+    'Correo',
+    'Tramo Vencimiento',
+    'Agencia',
+    'Riesgo'
+]
+
 
 cabecera = [
     'Orden del Pedidos','Código Persona','Cod Grupo','Nombre de la Persona','Título',

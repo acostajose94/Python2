@@ -67,7 +67,7 @@ def obtener_excel_retira():
     return None
 
 def obtener_despues_de_pregrado(archivo):
-    palabra_clave = 'pregrado'
+    palabra_clave = 'CERTUS_'
     indice = archivo.lower().find(palabra_clave.lower())
 
     if indice != -1:

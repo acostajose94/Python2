@@ -6,8 +6,8 @@ from variables import *
 
 archivo_reciente=extraer_archivo_mas_reciente()
 archivos_excel=listar_excels()
-retira=obtener_excel_retira()
-shutil.copy(retira, destino_retirar)
+#retira=obtener_excel_retira()
+#shutil.copy(retira, destino_retirar)
 ruta_carpeta=define_carpeta('B CERTUS',fecha_actual)
 print (ruta_carpeta)
 for archivo_excel in archivos_excel:
@@ -54,5 +54,5 @@ for archivo_excel in archivos_excel:
     shutil.move(archivo_excel,ruta_carpeta)
     # guardar_archivo_mover('B CERTUS', workbook, fecha_actual,nombre_short,archivo_excel,retira)
     print(nombre_short)
-shutil.move(retira,ruta_carpeta)
+#shutil.move(retira,ruta_carpeta)
 os.remove(archivo_reciente)

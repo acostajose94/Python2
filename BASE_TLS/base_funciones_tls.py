@@ -109,7 +109,7 @@ def define_carpeta(nombre_carpeta,fecha_actual):
     return ruta_carpeta
 
 def obtener_despues_de_pregrado(archivo):
-    palabra_clave = 'PRE'
+    palabra_clave = 'TLS'
     indice = archivo.lower().find(palabra_clave.lower())
 
     if indice != -1:
