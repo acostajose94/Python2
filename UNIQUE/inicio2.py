@@ -10,7 +10,6 @@ def listar_archivos_txt():
     for archivo in os.listdir(directorio_actual):
         if archivo.endswith('.txt'):
             archivos_txt.append(archivo)
-    
     return archivos_txt
 
 # Directorio donde se encuentran los archivos TXT
