@@ -6,8 +6,8 @@ from base_variables_tls import *
 
 archivo_reciente=extraer_archivo_mas_reciente()
 archivos_excel=listar_excels()
-retira=obtener_excel_retira()
-shutil.copy(retira, destino_retirar)
+# retira=obtener_excel_retira()
+# shutil.copy(retira, destino_retirar)
 ruta_carpeta=define_carpeta('B TLS',fecha_actual)
 
 for archivo_excel in archivos_excel:
@@ -44,7 +44,8 @@ for archivo_excel in archivos_excel:
     for col_idx, valor in enumerate(cabecera_nueva, start=1):
         sheet.cell(row=1, column=col_idx, value=valor)
 
-    nombre_short=obtener_despues_de_pregrado(archivo_excel)
+    # nombre_short=obtener_despues_de_pregrado(archivo_excel)
+    nombre_short=archivo_excel
     ruta_base=os.path.join(ruta_carpeta, 'BASE TLS ' + nombre_short)
     workbook.save(ruta_base + '.xlsx')
     shutil.move(archivo_excel,ruta_carpeta)
@@ -53,7 +54,7 @@ for archivo_excel in archivos_excel:
 
     # print('Guardando')
     # guardar_archivo_mover('B TLS', workbook, hoy_carpeta,indice_inicio,archivo_excel,selec)
-shutil.move(retira,ruta_carpeta)
+ 
 print('Echo')
 
 os.remove(archivo_reciente)

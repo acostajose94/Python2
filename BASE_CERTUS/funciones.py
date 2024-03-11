@@ -61,7 +61,7 @@ def obtener_excel_retira():
 
     for archivo in os.listdir(directorio_actual):
         if archivo.endswith('.xlsx') or archivo.endswith('.xls'):
-            if 'Retira' in archivo:
+            if 'Retirar' in archivo:
                 return archivo
     
     return None

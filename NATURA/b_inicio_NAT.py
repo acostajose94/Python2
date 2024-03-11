@@ -8,7 +8,7 @@ from b_variables_NAT import *
 # archivo_reciente=extraer_archivo_mas_reciente()
 archivos_excel=listar_excels()
 
-ruta_carpeta=define_carpeta('NAT SALDO',fecha_actual)
+ruta_carpeta=define_carpeta('NAT S',fecha_actual)
 
 for archivo_excel in archivos_excel:
     # Abre el archivo de Excel

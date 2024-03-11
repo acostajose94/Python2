@@ -78,11 +78,11 @@ if dia_semana < 5:
                 refresh=buscarImagen(img__refesh)
 
                 pyautogui.click(refresh)
-                time.sleep(8)
-                print('Escribiendo Clave')
-                pyautogui.write(text)
-                time.sleep(8)
-                pyautogui.press('enter') 
+                # time.sleep(8)
+                # print('Escribiendo Clave')
+                # pyautogui.write(text)
+                # time.sleep(8)
+                # pyautogui.press('enter') 
 
                 xlapp.CalculateUntilAsyncQueriesDone() 
                 print('Primer refresh')  
