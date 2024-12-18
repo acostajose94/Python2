@@ -31,12 +31,14 @@ if dia_semana < 5:
 
     def play():
         
-        ping_output = subprocess.run(["ping", "-n", "1", ip_address], capture_output=True)
+        # El vpn se coneccta inmeidatamente 
+        # ping_output = subprocess.run(["ping", "-n", "1", ip_address], capture_output=True)
 
-        if ping_output.returncode != 0:
-            conectar_VPN(img__forti,img__conectar)
+        # if ping_output.returncode != 0:
+        #     conectar_VPN(img__forti,img__conectar)
         
         # crea dd-mm-yyyy
+        time.sleep(12)
         crear_carpeta_si_no_existe(folder__destino)
         # Crea carpeta del dia
         crear_carpeta_si_no_existe(folder__mover+fecha_carpeta)

@@ -6,8 +6,8 @@ from base_variables_tls import *
 
 archivo_reciente=extraer_archivo_mas_reciente()
 archivos_excel=listar_excels()
-# retira=obtener_excel_retira()
-# shutil.copy(retira, destino_retirar)
+retira=obtener_excel_retira()
+shutil.copy(retira, destino_retirar)
 ruta_carpeta=define_carpeta('B TLS',fecha_actual)
 
 for archivo_excel in archivos_excel:

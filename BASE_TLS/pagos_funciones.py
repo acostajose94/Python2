@@ -2,10 +2,17 @@ import glob
 import os
 from openpyxl import load_workbook
 from openpyxl.styles import numbers
+from openpyxl.worksheet.worksheet import Worksheet
 import shutil
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.cell.cell import Cell
+from openpyxl.worksheet.worksheet import Worksheet
 
+import os
 import zipfile
 import rarfile
+from pagos_variables import *
 
 
 def eliminar_archivos_excel(ruta_actual):
@@ -145,7 +152,46 @@ def pagos_certus(filename, cabecera_esperada, nueva_cabecera,fecha_actual):
 
         # Guardar los cambios en un nuevo archivo
         ruta_carpeta = define_carpeta('P CERTUS', fecha_actual)
-        file_name = 'PAGOS_CERTUS' + fecha_actual + '.xlsx'
+        
+        base_name = os.path.basename(filename)
+        # Crear el nuevo nombre del archivo sin duplicar la ruta
+        if 'CAMPUS' in base_name:
+            new_base_name = f'PAGOS_CAMPUS_{fecha_actual}.xlsx'
+        else:
+            new_base_name = f'PAGOS_CERTUS_{fecha_actual}.xlsx'
+        
+        new_filename = os.path.join(ruta_carpeta, new_base_name)
+        wb.save(new_filename)
+
+        # Mover el archivo original a la carpeta especificada
+        shutil.move(filename, ruta_carpeta)
+        print("Certus Generado")
+    else:
+        print("La cabecera no es la esperada. Deteniendo la ejecución.")
+
+def pagos_campus(filename, cabecera_esperada, nueva_cabecera,fecha_actual):
+    wb_pre = load_workbook(filename)
+    # sheet_pre = wb_pre.active
+
+    if 1==1:
+        print("La cabecera  correcta CERTUS")
+        
+        wb=reordenar_columnas(wb_pre,cab_campus_orden)
+        sheet = wb.active
+ 
+        formato_texto(sheet, 2, 3)
+        formato_numero(sheet, 11, 12, 13, 14, 15, 16)
+        formato_fecha(sheet, 7, 17, 18, 19, 20)
+        
+ 
+        for col_num, valor in enumerate(nueva_cabecera, 1):
+            sheet.cell(row=1, column=col_num, value=valor)
+
+
+        
+        # Guardar los cambios en un nuevo archivo
+        ruta_carpeta = define_carpeta('P CERTUS', fecha_actual)
+        file_name = 'PAGOS_CAMPUS ' + fecha_actual + '.xlsx'
         new_filename = os.path.join(ruta_carpeta, file_name)
         wb.save(new_filename)
 
@@ -158,23 +204,101 @@ def pagos_certus(filename, cabecera_esperada, nueva_cabecera,fecha_actual):
 
 
 
-def pagos_tls(filename,fecha_actual):
-    wb = load_workbook(filename)
-    sheet = wb.active
+# def pagos_tls(filename,fecha_actual):
+#     wb = load_workbook(filename)
+#     sheet = wb.active
     
-    formato_texto(sheet, 1)
-    formato_numero(sheet,buscar_posicion_por_nombre(sheet,'Importe Pagado'))
-    formato_fecha(sheet, buscar_posicion_por_nombre(sheet,'Fecha Pago'))
+#     formato_texto(sheet, 1)
+#     formato_numero(sheet,buscar_posicion_por_nombre(sheet,'Importe Pagado'))
+#     formato_fecha(sheet, buscar_posicion_por_nombre(sheet,'Fecha Pago'))
     
-    ruta_carpeta = define_carpeta('P TLS', fecha_actual)
-    file_name = 'PAGOS_TLS' + fecha_actual + '.xlsx'
-    new_filename = os.path.join(ruta_carpeta, file_name)
-    wb.save(new_filename)
+#     ruta_carpeta = define_carpeta('P TLS', fecha_actual)
+#     file_name = 'PAGOS_TLS' + fecha_actual + '.xlsx'
+#     new_filename = os.path.join(ruta_carpeta, file_name)
+#     wb.save(new_filename)
     
-    # Abrir el archivo
-    ruta_v=r'V:\142. Ucal-Tls\\'
-    shutil.copy(new_filename,ruta_v)
-    # os.startfile(new_filename)
-    shutil.move(filename,ruta_carpeta)
-    print("TLS Generado")
+#     # Abrir el archivo
+#     ruta_v=r'V:\142. Ucal-Tls\\'
+#     shutil.copy(new_filename,ruta_v)
+#     # os.startfile(new_filename)
+#     shutil.move(filename,ruta_carpeta)
+#     print("TLS Generado")
     
+    
+    
+def reordenar_columnas(archivo_excel, nuevo_orden):
+    # Obtener la hoja pasada como argumento
+    libro = archivo_excel
+    hoja = libro.active
+
+    # Insertar una columna 'NO_HAY_DATA' al principio sin datos
+    hoja.insert_cols(1)
+    hoja.cell(row=1, column=1, value='NO_HAY_DATA')
+
+    # Obtener las posiciones actuales de las cabeceras
+    cabeceras = [hoja.cell(row=1, column=col).value for col in range(1, hoja.max_column + 1)]
+    posiciones_actuales = {cabecera: [] for cabecera in cabeceras}
+
+    for index, cabecera in enumerate(cabeceras):
+        posiciones_actuales[cabecera].append(index + 1)
+
+    # Crear una nueva hoja para almacenar los datos reordenados
+    nuevo_libro = Workbook()
+    nueva_hoja = nuevo_libro.active
+
+    # Crear las cabeceras en el nuevo orden
+    for cabecera in nuevo_orden:
+        nueva_hoja.cell(row=1, column=nuevo_orden.index(cabecera) + 1, value=cabecera)
+
+    # Copiar los datos a la nueva hoja en el nuevo orden
+    for row in hoja.iter_rows(min_row=2, max_row=hoja.max_row, values_only=True):
+        nueva_fila = []
+        for cabecera in nuevo_orden:
+            # Obtener todas las posiciones de la cabecera en el archivo original
+            posiciones = posiciones_actuales[cabecera]
+            # Iterar sobre las posiciones y agregar el valor correspondiente
+            for pos in posiciones:
+                nueva_fila.append(row[pos - 1])
+        nueva_hoja.append(nueva_fila)
+
+    return nuevo_libro
+     
+    
+    
+# def reordenar_columnas(archivo_excel, nuevo_orden):
+#     # Obtener la hoja pasada como argumento
+#     libro = archivo_excel
+#     hoja = libro.active
+
+#     # Insertar una columna 'NO_HAY_DATA' al principio sin datos
+#     hoja.insert_cols(1)
+#     hoja.cell(row=1, column=1, value='NO_HAY_DATA')
+
+#     # Obtener las posiciones actuales de las cabeceras
+#     cabeceras = [hoja.cell(row=1, column=col).value for col in range(1, hoja.max_column + 1)]
+#     posiciones_actuales = {cabecera: [] for cabecera in cabeceras}
+
+#     for index, cabecera in enumerate(cabeceras):
+#         posiciones_actuales[cabecera].append(index + 1)
+
+#     # Crear una nueva hoja para almacenar los datos reordenados
+#     nuevo_libro = Workbook()
+#     nueva_hoja = nuevo_libro.active
+
+#     # Crear las cabeceras en el nuevo orden
+#     for cabecera in nuevo_orden:
+#         nueva_hoja.cell(row=1, column=nuevo_orden.index(cabecera) + 1, value=cabecera)
+
+#     # Copiar los datos a la nueva hoja en el nuevo orden
+#     for row in hoja.iter_rows(min_row=2, max_row=hoja.max_row, values_only=True):
+#         nueva_fila = []
+#         for cabecera in nuevo_orden:
+#             # Obtener todas las posiciones de la cabecera en el archivo original
+#             posiciones = posiciones_actuales[cabecera]
+#             # Iterar sobre las posiciones y agregar el valor correspondiente
+#             for pos in posiciones:
+#                 nueva_fila.append(row[pos - 1])
+#         nueva_hoja.append(nueva_fila)
+
+#     return nuevo_libro
+ 

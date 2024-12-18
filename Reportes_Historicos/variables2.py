@@ -4,8 +4,8 @@ import os
 code_ubica=os.getcwd()
 carp_imagen=code_ubica+'\imagenes'
 
-folder__destino = r'C:\Users\avalp\Downloads\yyyy-mm-dd\\'
-zip_ubicacion   = r'C:\Users\avalp\Downloads\reportes_historicos_3.zip'
+folder__destino = r'C:\Users\avalp\Downloads\yyyy-mm-dd2\\'
+zip_ubicacion   = r'C:\Users\avalp\Downloads\yyyy-mm-dd2.zip'
 img__forti      = r''+carp_imagen+'\\forti.png'
 img__conectar   = r''+carp_imagen+'\\conectar.png'
 img__excel      = r''+carp_imagen+'\\logo__excel.png'
@@ -23,7 +23,7 @@ img__formato    = r''+carp_imagen+'\\img__formato.png'
 img__bn         = r''+carp_imagen+'\\img__bn.png'
 folder__mover   = r'C:\Users\avalp\OneDrive\Escritorio\\'
 text            = 'avalperu2020*$'
-ip_address = '172.23.23.119'
+ip_address = '192.168.10.45'
 confidence =0.9
 confidence2 =0.8
 count = 0

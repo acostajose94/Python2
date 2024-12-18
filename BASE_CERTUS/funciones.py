@@ -56,12 +56,12 @@ def listar_excels():
     
     return archivos_excel        
  
-def obtener_excel_retira():
+def obtener_excel(palabra):
     directorio_actual = os.getcwd()
 
     for archivo in os.listdir(directorio_actual):
         if archivo.endswith('.xlsx') or archivo.endswith('.xls'):
-            if 'Retirar' in archivo:
+            if palabra in archivo:
                 return archivo
     
     return None
@@ -85,8 +85,6 @@ def verificar_cabecera_completa(sheet, cabecera):
         if celda.value != valor_cabecera:
             print(f"La columna {celda.column_letter} no coincide: se esperaba '{valor_cabecera}', se encontró '{celda.value}'")
             return False
-            break
-    
     return True
 
 def insertar_columnas_vacias(sheet, nombre_columna, cantidad_columnas):
@@ -208,3 +206,40 @@ def corregir_valor_columna(sheet, posicion_columna, valor_a_reemplazar, nuevo_va
             nuevo_valor_celda = valor_celda.replace(valor_a_reemplazar, nuevo_valor)
             sheet.cell(row=fila, column=posicion_columna, value=nuevo_valor_celda)
 
+def reordenar_columnas(archivo_excel, nuevo_orden):
+    # Obtener la hoja pasada como argumento
+    libro = archivo_excel
+    hoja = libro.active
+
+    # Insertar una columna 'NO_HAY_DATA' al principio sin datos
+    hoja.insert_cols(1)
+    hoja.cell(row=1, column=1, value='NO_HAY_DATA')
+
+    # Obtener las posiciones actuales de las cabeceras
+    cabeceras = [hoja.cell(row=1, column=col).value for col in range(1, hoja.max_column + 1)]
+    posiciones_actuales = {cabecera: [] for cabecera in cabeceras}
+
+    for index, cabecera in enumerate(cabeceras):
+        posiciones_actuales[cabecera].append(index + 1)
+
+    # Crear una nueva hoja para almacenar los datos reordenados
+    nuevo_libro = Workbook()
+    nueva_hoja = nuevo_libro.active
+
+    # Crear las cabeceras en el nuevo orden
+    for cabecera in nuevo_orden:
+        nueva_hoja.cell(row=1, column=nuevo_orden.index(cabecera) + 1, value=cabecera)
+
+    # Copiar los datos a la nueva hoja en el nuevo orden
+    for row in hoja.iter_rows(min_row=2, max_row=hoja.max_row, values_only=True):
+        nueva_fila = []
+        for cabecera in nuevo_orden:
+            # Obtener todas las posiciones de la cabecera en el archivo original
+            posiciones = posiciones_actuales[cabecera]
+            # Iterar sobre las posiciones y agregar el valor correspondiente
+            for pos in posiciones:
+                nueva_fila.append(row[pos - 1])
+        nueva_hoja.append(nueva_fila)
+
+    return nuevo_libro
+ 

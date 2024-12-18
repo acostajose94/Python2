@@ -1,7 +1,7 @@
 import os
 
 # Definir cabecera esperada
-cabecera_esperada = ['UNE', 'COD_ALUMNO', 'PIDM', 'NOMBRES', 'APELLIDOS', 'NIVEL', 'NIVEL_DESCRIPCION', 'NUM_COMPROBANTE',
+cabecera_esperada = ['UNE', 'COD_ALUMNO', 'PIDM', 'NOMBRES', 'APELLIDOS', 'NIVEL','NIVEL_DESCRIPCION','NUM_COMPROBANTE',
                      'NUM_COMPROBANTE', 'FEC_VENCIMIENTO', 'TRAN_CARGO', 'COD_CARGO', 'DESC_CARGO', 'IMP_CARGO', 'IMP_DSCTO',
                   'IMP_NETO', 'IMP_NC', 'IMP_PAGO', 'IMP_SALDO', 'FEC_HOR_PAG_TRAN', 'FEC_HOR_PAG_REG', 'FEC_PAG_TRAN',
                   'FEC_PAG_REG', 'COD_MEDIO_PAGO', 'DESC_MEDIO_PAGO', 'TRAN_PAGO', 'PERIODO', 'PROGRAMA',
@@ -25,3 +25,40 @@ from datetime import datetime
 # Obtener la fecha actual en formato dd_mm
 hoy=datetime.now()
 fecha_actual =hoy.strftime('%d_%m')
+
+
+cab_campus_orden=['UN',
+'ID',
+'NO_HAY_DATA',
+'Nombres',
+'Apellidos',
+'Nº Factura',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'Importe Pagado',
+'NO_HAY_DATA',
+'Importe Pagado',
+'NO_HAY_DATA',
+'Importe Pagado',
+'NO_HAY_DATA',
+'Fecha Pago',
+'Fecha Pago',
+'Fecha Pago',
+'Fecha Pago',
+'NO_HAY_DATA',
+'Descripción',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA',
+'NO_HAY_DATA'
+]
